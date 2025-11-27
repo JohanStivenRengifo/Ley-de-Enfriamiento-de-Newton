@@ -2,7 +2,7 @@
 
 Sistema interactivo para la gestión y análisis de la Ley de Enfriamiento de Newton, específicamente diseñado para modelar el enfriamiento de un bloque de acero.
 
-## 📋 Caso de Estudio
+## Caso de Estudio
 
 Este sistema está centrado en el siguiente problema de la industria manufacturera:
 
@@ -18,7 +18,7 @@ Este sistema está centrado en el siguiente problema de la industria manufacture
 
 > **Nota:** Aunque el sistema está diseñado alrededor de este caso específico, puede adaptarse a cualquier problema de enfriamiento cambiando los parámetros.
 
-## 🔬 Modelo Matemático
+## Modelo Matemático
 
 ### Ecuación Diferencial
 
@@ -42,7 +42,7 @@ $$\ln|T - T_a| + kt = C$$
 
 Donde $C = \ln|T_0 - T_a|$ es una constante determinada por las condiciones iniciales.
 
-## 🔧 Parámetros del Sistema
+## Parámetros del Sistema
 
 - **Temperatura Inicial (T₀)**: Temperatura inicial del objeto metálico (°C)
 - **Temperatura Ambiente (Tₐ)**: Temperatura constante del medio ambiente (°C)
@@ -59,7 +59,7 @@ Los valores por defecto corresponden al caso de estudio del bloque de acero:
 La constante $k$ se calcula usando la fórmula:
 $$k = \frac{1}{t} \ln\left(\frac{T_0 - T_a}{T - T_a}\right) = \frac{1}{5} \ln\left(\frac{300 - 20}{200 - 20}\right) \approx 0.088367 \text{ min}^{-1}$$
 
-## 🧮 Verificación Matemática
+## Verificación Matemática
 
 El sistema verifica que la solución implícita satisface la ecuación diferencial mediante:
 
@@ -67,7 +67,7 @@ El sistema verifica que la solución implícita satisface la ecuación diferenci
 2. Verificación de que esta expresión permanece constante (igual a C)
 3. Derivación implícita para confirmar que se recupera la ecuación diferencial original
 
-## 👥 Autores
+## Autores
 
 Desarrollado para el análisis de ecuaciones diferenciales aplicadas a problemas de ingeniería.
 

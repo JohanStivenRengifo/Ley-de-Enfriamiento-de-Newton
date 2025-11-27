@@ -21,24 +21,10 @@ st.set_page_config(
 # Título principal
 st.title("🌡️ Sistema de Gestión - Ley de Enfriamiento de Newton")
 st.markdown("### Enfriamiento de un Bloque de Acero")
-st.markdown("""
-<div style='background-color: #e8f4f8; padding: 15px; border-radius: 10px; border-left: 5px solid #4ECDC4; margin-bottom: 20px;'>
-<h4 style='color: #2c3e50; margin-top: 0;'>📋 Caso de Estudio</h4>
-<p style='color: #34495e; margin-bottom: 10px;'>
-Un <strong>bloque de acero</strong> con dimensiones de <strong>10 cm × 10 cm × 2 cm</strong> es retirado de un horno industrial 
-a una temperatura de <strong>300°C</strong>. Inmediatamente se coloca en un ambiente con temperatura constante de <strong>20°C</strong> 
-para su enfriamiento. Después de <strong>5 minutos</strong>, se mide que la temperatura del bloque ha descendido a <strong>200°C</strong>.
-</p>
-<p style='color: #34495e; margin: 0;'>
-<strong>Contexto Industrial:</strong> Este tipo de situación es común en procesos de manufactura como el tratamiento térmico de metales, 
-donde es fundamental controlar la velocidad de enfriamiento para garantizar propiedades mecánicas específicas.
-</p>
-</div>
-""", unsafe_allow_html=True)
 st.markdown("---")
 
 # Sidebar para parámetros de entrada
-st.sidebar.header("⚙️ Parámetros del Sistema")
+st.sidebar.header("Parámetros del Sistema")
 
 # Parámetros principales
 T0 = st.sidebar.number_input(
@@ -71,7 +57,7 @@ k = st.sidebar.number_input(
 
 # Opción para calcular k desde datos experimentales
 st.sidebar.markdown("---")
-st.sidebar.subheader("🔬 Calcular k desde Datos")
+st.sidebar.subheader("Calcular k desde Datos")
 use_experimental = st.sidebar.checkbox("Usar datos experimentales para calcular k")
 
 if use_experimental:
@@ -222,28 +208,7 @@ try:
         implicit_values = calculator.verify_implicit_solution(times_table)
         
         # Explicación simple e intuitiva antes de la tabla
-        st.markdown("### 📊 Tabla de Resultados del Enfriamiento")
-        
-        st.markdown("""
-        <div style='background-color: #e8f4f8; padding: 15px; border-radius: 10px; border-left: 5px solid #4ECDC4; margin-bottom: 20px;'>
-        <h4 style='color: #2c3e50; margin-top: 0;'>💡 ¿Qué muestra esta tabla?</h4>
-        <p style='color: #34495e; margin-bottom: 10px;'>
-        Esta tabla muestra cómo cambia la temperatura del objeto a medida que pasa el tiempo. 
-        <strong>Observa cómo la temperatura disminuye gradualmente</strong> desde {:.1f}°C hacia {:.1f}°C (temperatura ambiente).
-        </p>
-        <p style='color: #34495e; margin-bottom: 10px;'>
-        <strong>Columna importante:</strong> La última columna muestra la expresión <strong>ln|T - Ta| + kt</strong>. 
-        Esta es una forma matemática de verificar que nuestro modelo es correcto. 
-        <span style='background-color: #fff3cd; padding: 2px 5px; border-radius: 3px;'>
-        <strong>¡Mira cómo todos los valores son prácticamente iguales!</strong>
-        </span>
-        </p>
-        <p style='color: #34495e; margin: 0;'>
-        Si todos los valores de esta columna son iguales (o muy cercanos), significa que nuestra solución matemática 
-        es correcta y el modelo funciona bien.
-        </p>
-        </div>
-        """.format(T0, Ta), unsafe_allow_html=True)
+        st.markdown("### Tabla de Resultados del Enfriamiento")
         
         st.info("""
         **🔍 Explicación simple de la última columna:**
@@ -376,7 +341,7 @@ try:
         
         Esta expresión combina dos términos:
         
-        1. **$\\ln|T - T_a|$**: El lnaritmo natural del valor absoluto de la diferencia entre la temperatura del objeto 
+        1. **$\ln|T - T_a|$**: El logaritmo natural del valor absoluto de la diferencia entre la temperatura del objeto 
            y la temperatura ambiente. Este término disminuye a medida que el objeto se acerca a la temperatura ambiente.
         
         2. **$kt$**: El producto de la constante de enfriamiento por el tiempo transcurrido. Este término aumenta linealmente con el tiempo.
@@ -392,7 +357,7 @@ try:
         ### Interpretación Física
         
         La solución implícita nos dice que a medida que pasa el tiempo, la diferencia de temperatura disminuye exponencialmente, 
-        pero la combinación lnarítmica de esta diferencia más el tiempo escalado por la constante k siempre suma el mismo valor constante.
+        pero la combinación logarítmica de esta diferencia más el tiempo escalado por la constante k siempre suma el mismo valor constante.
         """)
         
         # Generar datos para verificación
@@ -567,7 +532,7 @@ try:
         
         **¿Qué significa esta expresión?**
         
-        - **$\\ln|T - T_a|$**: lnaritmo natural del valor absoluto de la diferencia entre la temperatura del objeto 
+        - **$\ln|T - T_a|$**: Logaritmo natural del valor absoluto de la diferencia entre la temperatura del objeto 
           y la temperatura ambiente. Este término representa cómo la diferencia de temperatura disminuye con el tiempo.
         
         - **$kt$**: Producto de la constante de enfriamiento por el tiempo. Este término aumenta linealmente con el tiempo.

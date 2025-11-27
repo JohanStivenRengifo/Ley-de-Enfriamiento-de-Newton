@@ -1,6 +1,6 @@
-# 📚 Documentación Técnica del Sistema de Gestión - Ley de Enfriamiento de Newton
+# Documentación Técnica del Sistema de Gestión - Ley de Enfriamiento de Newton
 
-## 📋 Tabla de Contenidos
+## Tabla de Contenidos
 
 1. [Introducción](#introducción)
 2. [Arquitectura del Sistema](#arquitectura-del-sistema)
@@ -201,7 +201,7 @@ $$
 \frac{T(t) - T_a}{T_0 - T_a} = e^{-kt}
 $$
 
-3. Aplicamos lnaritmo natural en ambos lados:
+3. Aplicamos logaritmo natural en ambos lados:
 $$
 \ln\left(\frac{T(t) - T_a}{T_0 - T_a}\right) = \ln(e^{-kt}) = -kt
 $$
@@ -211,7 +211,7 @@ $$
 k = -\frac{1}{t} \ln\left(\frac{T(t) - T_a}{T_0 - T_a}\right)
 $$
 
-5. Aplicando propiedades de lnaritmos para simplificar:
+5. Aplicando propiedades de logaritmos para simplificar:
 $$
 k = \frac{1}{t} \ln\left(\frac{T_0 - T_a}{T(t) - T_a}\right)
 $$
@@ -246,7 +246,7 @@ $$
 k = \frac{1}{5} \ln\left(\frac{300 - 20}{200 - 20}\right) = \frac{1}{5} \ln\left(\frac{280}{180}\right) = \frac{1}{5} \ln(1.5556)
 $$
 
-Calculando el lnaritmo:
+Calculando el logaritmo:
 
 $$
 k = \frac{1}{5} \times 0.4418 \approx 0.088367 \text{ min}^{-1}
@@ -1002,7 +1002,7 @@ graph TB
 
 ### Librerías Utilizadas
 
-- **NumPy**: Cálculos numéricos (lnaritmos, exponenciales, arrays)
+- **NumPy**: Cálculos numéricos (logaritmos, exponenciales, arrays)
 - **SciPy**: Optimización y funciones científicas
 - **Streamlit**: Framework para aplicaciones web interactivas
 - **Plotly**: Visualización de gráficas interactivas
