@@ -356,7 +356,7 @@ try:
                      f"{t_90:.2f} min" if t_90 else "N/A")
         with col3:
             # Tiempo de vida media térmica (similar a decaimiento exponencial)
-            t_half_life = np.ln(2) / k
+            t_half_life = np.log(2) / k
             st.metric("Vida Media Térmica (ln(2)/k)", f"{t_half_life:.2f} min")
     
     with tab4:
