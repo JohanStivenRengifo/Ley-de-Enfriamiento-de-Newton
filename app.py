@@ -118,11 +118,11 @@ try:
     
     # Tabs para diferentes secciones
     tab1, tab2, tab3, tab4, tab5 = st.tabs([
-        "📊 Visualización", 
-        "📋 Tabla de Resultados", 
-        "🔍 Análisis Detallado",
-        "✅ Verificación de Solución",
-        "📖 Información del Modelo"
+        "Visualización", 
+        "Tabla de Resultados", 
+        "Análisis Detallado",
+        "Verificación de Solución",
+        "Información del Modelo"
     ])
     
     with tab1:
@@ -631,4 +631,3 @@ st.markdown("""
     <p>Desarrollado para el análisis de ecuaciones diferenciales</p>
 </div>
 """, unsafe_allow_html=True)
-
