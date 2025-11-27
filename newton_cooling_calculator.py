@@ -9,10 +9,6 @@ from scipy.optimize import fsolve
 
 class NewtonCoolingCalculator:
     """
-    Calculadora para la Ley de Enfriamiento de Newton
-    
-    La ecuación diferencial es: dT/dt = -k(T - Ta)
-    Donde:
     - T(t): temperatura del objeto en el instante t
     - Ta: temperatura ambiente (constante)
     - k: constante de enfriamiento (k > 0)
@@ -20,12 +16,9 @@ class NewtonCoolingCalculator:
     
     def __init__(self, T0, Ta, k):
         """
-        Inicializa la calculadora con los parámetros del problema
-        
-        Args:
-            T0: Temperatura inicial del objeto (°C)
-            Ta: Temperatura ambiente (°C)
-            k: Constante de enfriamiento (min^-1)
+        T0: Temperatura inicial del objeto (°C)
+        Ta: Temperatura ambiente (°C)
+        k: Constante de enfriamiento (min^-1)
         """
         self.T0 = T0
         self.Ta = Ta
