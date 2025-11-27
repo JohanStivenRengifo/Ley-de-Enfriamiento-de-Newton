@@ -9,14 +9,37 @@
 5. [Módulo de Cálculos](#módulo-de-cálculos)
 6. [Aplicación Web](#aplicación-web)
 7. [Flujo de Datos](#flujo-de-datos)
-8. [Ejemplos de Uso](#ejemplos-de-uso)
-9. [Referencias](#referencias)
+8. [Referencias](#referencias)
 
 ---
 
 ## Introducción
 
-Este sistema implementa una aplicación web interactiva para modelar y analizar el proceso de enfriamiento de objetos metálicos utilizando la **Ley de Enfriamiento de Newton**. El sistema está compuesto por dos módulos principales:
+Este sistema implementa una aplicación web interactiva para modelar y analizar el proceso de enfriamiento de objetos metálicos utilizando la **Ley de Enfriamiento de Newton**. El sistema está diseñado alrededor de un caso de estudio específico de la industria manufacturera, pero puede adaptarse a cualquier problema de enfriamiento.
+
+### Caso de Estudio Principal
+
+El sistema está centrado en el siguiente problema real:
+
+**Problema:** Un bloque de acero con dimensiones de **10 cm × 10 cm × 2 cm** es retirado de un horno industrial a una temperatura de **300°C**. Inmediatamente se coloca en un ambiente con temperatura constante de **20°C** para su enfriamiento. Después de **5 minutos**, se mide que la temperatura del bloque ha descendido a **200°C**.
+
+**Contexto Industrial:** Este tipo de situación es común en procesos de manufactura como el tratamiento térmico de metales, donde es fundamental controlar la velocidad de enfriamiento para garantizar propiedades mecánicas específicas. El control preciso del enfriamiento es crítico para:
+- Evitar deformaciones y tensiones internas
+- Garantizar la dureza y resistencia adecuadas
+- Optimizar los tiempos de producción
+- Asegurar la calidad del producto final
+
+**Parámetros del Caso de Estudio:**
+- Temperatura inicial: $T_0 = 300°C$
+- Temperatura ambiente: $T_a = 20°C$
+- Temperatura medida a los 5 minutos: $T(5) = 200°C$
+- Constante de enfriamiento calculada: $k \approx 0.088367$ min⁻¹
+
+Estos valores son los valores por defecto en la aplicación, pero el sistema permite trabajar con cualquier conjunto de parámetros.
+
+### Módulos del Sistema
+
+El sistema está compuesto por dos módulos principales:
 
 - **`newton_cooling_calculator.py`**: Módulo de cálculo matemático que implementa las ecuaciones diferenciales
 - **`app.py`**: Aplicación web interactiva construida con Streamlit
@@ -24,11 +47,11 @@ Este sistema implementa una aplicación web interactiva para modelar y analizar 
 ### Objetivo del Sistema
 
 El sistema permite:
-- Calcular la temperatura de un objeto en función del tiempo
+- Calcular la temperatura del bloque de acero en función del tiempo
 - Visualizar gráficamente el proceso de enfriamiento
 - Verificar soluciones explícitas e implícitas de la ecuación diferencial
-- Calcular la constante de enfriamiento a partir de datos experimentales
-- Generar tablas de resultados y análisis detallados
+- Calcular la constante de enfriamiento a partir de datos experimentales (como en el caso de estudio)
+- Generar tablas de resultados y análisis detallados para procesos industriales
 
 ---
 
@@ -159,17 +182,81 @@ Esta razón es máxima al inicio cuando la diferencia de temperatura es mayor, y
 
 ### Cálculo de la Constante k desde Datos Experimentales
 
-Si conocemos la temperatura en un tiempo específico, podemos calcular $k$:
+Si conocemos la temperatura medida $T_{medida}$ en un tiempo específico $t$, podemos calcular $k$ a partir de la solución explícita.
 
-De la solución explícita:
+**Partiendo de la solución explícita:**
 $$
 T(t) = T_a + (T_0 - T_a) e^{-kt}
 $$
 
-Despejando $k$:
+**Proceso de despeje paso a paso:**
+
+1. Restamos $T_a$ en ambos lados:
 $$
-k = \frac{1}{t} \ln\left(\frac{T_0 - T_a}{T - T_a}\right)
+T(t) - T_a = (T_0 - T_a) e^{-kt}
 $$
+
+2. Dividimos ambos lados por $(T_0 - T_a)$:
+$$
+\frac{T(t) - T_a}{T_0 - T_a} = e^{-kt}
+$$
+
+3. Aplicamos logaritmo natural en ambos lados:
+$$
+\ln\left(\frac{T(t) - T_a}{T_0 - T_a}\right) = \ln(e^{-kt}) = -kt
+$$
+
+4. Despejamos $k$ multiplicando por $-1$ y dividiendo por $t$:
+$$
+k = -\frac{1}{t} \ln\left(\frac{T(t) - T_a}{T_0 - T_a}\right)
+$$
+
+5. Aplicando propiedades de logaritmos para simplificar:
+$$
+k = \frac{1}{t} \ln\left(\frac{T_0 - T_a}{T(t) - T_a}\right)
+$$
+
+**Fórmula final:**
+$$
+k = \frac{1}{t} \ln\left(\frac{T_0 - T_a}{T_{medida} - T_a}\right)
+$$
+
+Donde:
+- $T_0$: Temperatura inicial
+- $T_a$: Temperatura ambiente
+- $T_{medida}$: Temperatura medida en el tiempo $t$
+- $t$: Tiempo transcurrido desde el inicio
+
+#### Ejemplo: Caso de Estudio del Bloque de Acero
+
+Para el caso de estudio específico:
+- Temperatura inicial: $T_0 = 300°C$
+- Temperatura ambiente: $T_a = 20°C$
+- Temperatura medida a los 5 minutos: $T(5) = 200°C$
+
+Aplicando la fórmula de cálculo de $k$:
+
+$$
+k = \frac{1}{t} \ln\left(\frac{T_0 - T_a}{T_{medida} - T_a}\right)
+$$
+
+Sustituyendo los valores:
+
+$$
+k = \frac{1}{5} \ln\left(\frac{300 - 20}{200 - 20}\right) = \frac{1}{5} \ln\left(\frac{280}{180}\right) = \frac{1}{5} \ln(1.5556)
+$$
+
+Calculando el logaritmo:
+
+$$
+k = \frac{1}{5} \times 0.4418 \approx 0.088367 \text{ min}^{-1}
+$$
+
+Esta es la constante de enfriamiento que caracteriza el comportamiento térmico del bloque de acero en estas condiciones específicas. Esta constante depende de:
+- Las propiedades térmicas del material (acero)
+- Las dimensiones del bloque (10 cm × 10 cm × 2 cm)
+- Las condiciones del ambiente (temperatura, humedad, movimiento del aire)
+- El mecanismo de transferencia de calor predominante (conducción, convección, radiación)
 
 ---
 
@@ -704,17 +791,17 @@ flowchart LR
 
 ```mermaid
 graph TD
-    A[Tiempos Característicos] --> B[Tiempo para mitad de diferencia]
-    A --> C[Tiempo para 90% equilibrio]
+    A[Tiempos Característicos] --> B[Tiempo para la mitad de la diferencia]
+    A --> C[Tiempo para 90 por ciento de equilibrio]
     A --> D[Vida Media Térmica]
     
-    B --> B1[Temp objetivo = Ta + (T0-Ta)/2]
-    B1 --> B2[time_to_reach_temperature]
+    B --> B1[Temperatura objetivo media]
+    B1 --> B2[Tiempo para alcanzar temperatura]
     
-    C --> C1[Temp objetivo = Ta + 0.1*(T0-Ta)]
-    C1 --> C2[time_to_reach_temperature]
+    C --> C1[Temperatura objetivo 90%]
+    C1 --> C2[Tiempo para alcanzar temperatura]
     
-    D --> D1[t_half = ln(2)/k]
+    D --> D1[Tiempo de media vida]
     
     style B fill:#FFE5B4
     style C fill:#FFE5B4
@@ -815,155 +902,17 @@ sequenceDiagram
 ```mermaid
 flowchart TD
     Start([Usuario solicita temperatura]) --> Input[Parámetros: T0, Ta, k, t]
-    Input --> Calc[calculator.temperature_explicit(t)]
+    Input --> Calc[calculator.temperature_explicit t]
     Calc --> Step1[Calcular diferencia inicial:<br/>T0 - Ta]
     Step1 --> Step2[Calcular exponente:<br/>-k * t]
-    Step2 --> Step3[Aplicar exponencial:<br/>exp(-k*t)]
-    Step3 --> Step4[Multiplicar por diferencia:<br/>(T0 - Ta) * exp(-k*t)]
+    Step2 --> Step3[Aplicar exponencial:<br/>exp_neg_k_t]
+    Step3 --> Step4[Multiplicar por diferencia:<br/>T0 - Ta * exp_neg_k_t]
     Step4 --> Step5[Sumar temperatura ambiente:<br/>Ta + resultado]
     Step5 --> Result([Retornar temperatura])
     
     style Start fill:#90EE90
     style Result fill:#FFB6C1
     style Calc fill:#87CEEB
-```
-
----
-
-## Ejemplos de Uso
-
-### Ejemplo 1: Uso Básico del Módulo de Cálculos
-
-```python
-from newton_cooling_calculator import NewtonCoolingCalculator
-
-# Inicializar calculadora
-# Objeto metálico a 300°C en ambiente de 20°C
-# Constante de enfriamiento k = 0.088367 min⁻¹
-calculator = NewtonCoolingCalculator(T0=300, Ta=20, k=0.088367)
-
-# Calcular temperatura después de 10 minutos
-temp_10min = calculator.temperature_explicit(10)
-print(f"Temperatura a los 10 min: {temp_10min:.2f}°C")
-# Salida: Temperatura a los 10 min: 135.71°C
-
-# Calcular razón de enfriamiento inicial
-rate_initial = calculator.cooling_rate(0)
-print(f"Razón de enfriamiento inicial: {rate_initial:.2f}°C/min")
-# Salida: Razón de enfriamiento inicial: -24.74°C/min
-
-# Verificar solución implícita
-times = [0, 5, 10, 15, 20]
-for t in times:
-    implicit_val = calculator.temperature_implicit(t)
-    print(f"t={t} min: log|T-Ta| + kt = {implicit_val:.6f}")
-# Todos los valores deberían ser aproximadamente iguales a C
-```
-
-### Ejemplo 2: Calcular k desde Datos Experimentales
-
-```python
-from newton_cooling_calculator import NewtonCoolingCalculator
-
-# Datos experimentales:
-# Temperatura inicial: 300°C
-# Temperatura ambiente: 20°C
-# A los 5 minutos, la temperatura medida es 200°C
-
-k = NewtonCoolingCalculator.calculate_k_from_data(
-    T0=300,
-    Ta=20,
-    T_measured=200,
-    t_measured=5
-)
-
-print(f"Constante k calculada: {k:.6f} min⁻¹")
-# Salida: Constante k calculada: 0.088367 min⁻¹
-
-# Ahora usar esta k para crear la calculadora
-calculator = NewtonCoolingCalculator(T0=300, Ta=20, k=k)
-```
-
-### Ejemplo 3: Generar Serie Temporal para Gráficas
-
-```python
-from newton_cooling_calculator import NewtonCoolingCalculator
-import matplotlib.pyplot as plt
-
-calculator = NewtonCoolingCalculator(T0=300, Ta=20, k=0.088367)
-
-# Generar datos para gráfica (60 minutos, 200 puntos)
-times, temperatures = calculator.generate_time_series(t_max=60, num_points=200)
-
-# Crear gráfica
-plt.figure(figsize=(10, 6))
-plt.plot(times, temperatures, 'r-', linewidth=2)
-plt.axhline(y=20, color='gray', linestyle='--', label='Temperatura Ambiente')
-plt.xlabel('Tiempo (min)')
-plt.ylabel('Temperatura (°C)')
-plt.title('Ley de Enfriamiento de Newton')
-plt.grid(True)
-plt.legend()
-plt.show()
-```
-
-### Ejemplo 4: Encontrar Tiempo para Alcanzar Temperatura Objetivo
-
-```python
-from newton_cooling_calculator import NewtonCoolingCalculator
-
-calculator = NewtonCoolingCalculator(T0=300, Ta=20, k=0.088367)
-
-# ¿Cuánto tiempo tarda en llegar a 100°C?
-time_to_100 = calculator.time_to_reach_temperature(100)
-
-if time_to_100 is not None:
-    print(f"Tiempo para alcanzar 100°C: {time_to_100:.2f} minutos")
-    print(f"Tiempo para alcanzar 100°C: {time_to_100/60:.2f} horas")
-    
-    # Verificar
-    temp_at_time = calculator.temperature_explicit(time_to_100)
-    print(f"Verificación: T({time_to_100:.2f}) = {temp_at_time:.2f}°C")
-else:
-    print("La temperatura objetivo no es alcanzable")
-```
-
-### Ejemplo 5: Verificación Completa de la Solución
-
-```python
-from newton_cooling_calculator import NewtonCoolingCalculator
-import numpy as np
-
-calculator = NewtonCoolingCalculator(T0=300, Ta=20, k=0.088367)
-
-# Generar tiempos para verificación
-times = np.linspace(0, 60, 20)
-
-# Verificar solución implícita
-implicit_values = calculator.verify_implicit_solution(times)
-
-# Comparar con constante C
-C = calculator.C
-differences = [abs(val - C) for val in implicit_values]
-
-print(f"Constante C esperada: {C:.6f}")
-print(f"\nVerificación de solución implícita:")
-print(f"{'Tiempo':<10} {'Valor Implícita':<20} {'Diferencia con C':<20}")
-print("-" * 50)
-
-for i, t in enumerate(times):
-    print(f"{t:<10.2f} {implicit_values[i]:<20.6f} {differences[i]:<20.2e}")
-
-max_diff = max(differences)
-mean_diff = np.mean(differences)
-
-print(f"\nDiferencia máxima: {max_diff:.2e}")
-print(f"Diferencia promedio: {mean_diff:.2e}")
-
-if max_diff < 1e-6:
-    print("✅ La solución implícita se verifica correctamente")
-else:
-    print("⚠️ Hay diferencias significativas")
 ```
 
 ---
@@ -1009,12 +958,12 @@ graph TB
     
     subgraph "Cálculos Intermedios"
         Diff[Diferencia T0 - Ta]
-        Exp[Exponencial exp(-kt)]
+        Exp[Exponencial exp_minus_kt]
         Prod[Producto Diff × Exp]
     end
     
     subgraph "Resultados"
-        T[Temperatura T(t)]
+        T[Temperatura T_t]
         Rate[Razón dT/dt]
         Implicit[Solución Implícita]
     end
@@ -1065,19 +1014,5 @@ graph TB
 - [Documentación de NumPy](https://numpy.org/doc/)
 - [Documentación de Plotly](https://plotly.com/python/)
 - [Ley de Enfriamiento de Newton - Wikipedia](https://es.wikipedia.org/wiki/Ley_del_enfriamiento_de_Newton)
-
----
-
-## Conclusión
-
-Este sistema proporciona una implementación completa y robusta de la Ley de Enfriamiento de Newton, con:
-
-- ✅ Cálculos matemáticos precisos
-- ✅ Verificación rigurosa de soluciones
-- ✅ Interfaz web interactiva y amigable
-- ✅ Visualizaciones claras y profesionales
-- ✅ Documentación completa del código
-
-El sistema es útil tanto para fines educativos como para aplicaciones prácticas en ingeniería térmica.
 
 ---

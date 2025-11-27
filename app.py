@@ -19,8 +19,22 @@ st.set_page_config(
 )
 
 # Título principal
-st.title("🌡️Ley de Enfriamiento de Newton")
+st.title("🌡️ Sistema de Gestión - Ley de Enfriamiento de Newton")
 st.markdown("### Enfriamiento de un Bloque de Acero")
+st.markdown("""
+<div style='background-color: #e8f4f8; padding: 15px; border-radius: 10px; border-left: 5px solid #4ECDC4; margin-bottom: 20px;'>
+<h4 style='color: #2c3e50; margin-top: 0;'>📋 Caso de Estudio</h4>
+<p style='color: #34495e; margin-bottom: 10px;'>
+Un <strong>bloque de acero</strong> con dimensiones de <strong>10 cm × 10 cm × 2 cm</strong> es retirado de un horno industrial 
+a una temperatura de <strong>300°C</strong>. Inmediatamente se coloca en un ambiente con temperatura constante de <strong>20°C</strong> 
+para su enfriamiento. Después de <strong>5 minutos</strong>, se mide que la temperatura del bloque ha descendido a <strong>200°C</strong>.
+</p>
+<p style='color: #34495e; margin: 0;'>
+<strong>Contexto Industrial:</strong> Este tipo de situación es común en procesos de manufactura como el tratamiento térmico de metales, 
+donde es fundamental controlar la velocidad de enfriamiento para garantizar propiedades mecánicas específicas.
+</p>
+</div>
+""", unsafe_allow_html=True)
 st.markdown("---")
 
 # Sidebar para parámetros de entrada
@@ -33,7 +47,7 @@ T0 = st.sidebar.number_input(
     max_value=1000.0,
     value=300.0,
     step=1.0,
-    help="Temperatura inicial del objeto metálico"
+    help="Temperatura inicial del bloque de acero al salir del horno (caso de estudio: 300°C)"
 )
 
 Ta = st.sidebar.number_input(
@@ -42,7 +56,7 @@ Ta = st.sidebar.number_input(
     max_value=100.0,
     value=20.0,
     step=1.0,
-    help="Temperatura constante del medio ambiente"
+    help="Temperatura constante del ambiente de enfriamiento (caso de estudio: 20°C)"
 )
 
 k = st.sidebar.number_input(
@@ -52,7 +66,7 @@ k = st.sidebar.number_input(
     value=0.088367,
     step=0.001,
     format="%.6f",
-    help="Constante de proporcionalidad del enfriamiento"
+    help="Constante de proporcionalidad del enfriamiento. Para el caso de estudio (T0=300°C, Ta=20°C, T(5min)=200°C), k ≈ 0.088367 min⁻¹"
 )
 
 # Opción para calcular k desde datos experimentales
@@ -66,14 +80,16 @@ if use_experimental:
         min_value=-50.0,
         max_value=1000.0,
         value=200.0,
-        step=1.0
+        step=1.0,
+        help="Temperatura medida del bloque después de cierto tiempo (caso de estudio: 200°C a los 5 minutos)"
     )
     t_measured = st.sidebar.number_input(
         "Tiempo de Medición (min)",
         min_value=0.1,
         max_value=1000.0,
         value=5.0,
-        step=0.1
+        step=0.1,
+        help="Tiempo transcurrido desde que se retiró del horno (caso de estudio: 5 minutos)"
     )
     
     try:
