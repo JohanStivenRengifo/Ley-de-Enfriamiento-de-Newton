@@ -19,7 +19,7 @@ st.set_page_config(
 )
 
 # Título principal
-st.title("🌡️ Sistema de Gestión - Ley de Enfriamiento de Newton")
+st.title("🌡️Ley de Enfriamiento de Newton")
 st.markdown("### Enfriamiento de un Bloque de Acero")
 st.markdown("---")
 

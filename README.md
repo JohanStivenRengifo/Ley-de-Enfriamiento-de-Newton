@@ -2,16 +2,6 @@
 
 Sistema interactivo para la gestión y análisis de la Ley de Enfriamiento de Newton, específicamente diseñado para modelar el enfriamiento de un bloque de acero.
 
-## 📋 Descripción
-
-Este sistema permite:
-
-- Calcular la temperatura de un objeto en función del tiempo usando la Ley de Enfriamiento de Newton
-- Visualizar gráficamente el proceso de enfriamiento
-- Verificar soluciones explícitas e implícitas de la ecuación diferencial
-- Calcular la constante de enfriamiento a partir de datos experimentales
-- Generar tablas de resultados y análisis detallados
-
 ## 🔬 Modelo Matemático
 
 ### Ecuación Diferencial
@@ -56,17 +46,9 @@ El sistema verifica que la solución implícita satisface la ecuación diferenci
 2. Verificación de que esta expresión permanece constante (igual a C)
 3. Derivación implícita para confirmar que se recupera la ecuación diferencial original
 
-## 📚 Referencias
-
-Este sistema está basado en el informe académico "Aplicación de ecuaciones diferenciales: Ley de enfriamiento de Newton" incluido en el PDF de referencia.
-
 ## 👥 Autores
 
-Desarrollado para el análisis de ecuaciones diferenciales aplicadas a problemas de ingeniería térmica.
-
-## 📝 Licencia
-
-Este proyecto es de uso educativo y académico.
+Desarrollado para el análisis de ecuaciones diferenciales aplicadas a problemas de ingeniería.
 
 ---
 
