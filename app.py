@@ -19,7 +19,7 @@ st.set_page_config(
 )
 
 # Título principal
-st.title("🌡️ Sistema de Gestión - Ley de Enfriamiento de Newton")
+st.title("Ley de Enfriamiento de Newton")
 st.markdown("### Enfriamiento de un Bloque de Acero")
 st.markdown("---")
 
@@ -330,7 +330,7 @@ try:
         st.markdown("""
         ### ¿Qué es la Solución Implícita?
         
-        Al resolver la ecuación diferencial $\frac{dT}{dt} = -k(T - T_a)$ por el método de separación de variables, 
+        Al resolver la ecuación diferencial $\\frac{dT}{dt} = -k(T - T_a)$ por el método de separación de variables, 
         obtenemos una relación matemática que puede expresarse en forma **implícita**:
         
         $$
@@ -341,7 +341,7 @@ try:
         
         Esta expresión combina dos términos:
         
-        1. **$\ln|T - T_a|$**: El logaritmo natural del valor absoluto de la diferencia entre la temperatura del objeto 
+        1. **$\\ln|T - T_a|$**: El logaritmo natural del valor absoluto de la diferencia entre la temperatura del objeto 
            y la temperatura ambiente. Este término disminuye a medida que el objeto se acerca a la temperatura ambiente.
         
         2. **$kt$**: El producto de la constante de enfriamiento por el tiempo transcurrido. Este término aumenta linealmente con el tiempo.
@@ -452,29 +452,6 @@ try:
         })
         
         st.dataframe(df_verify, use_container_width=True, hide_index=True)
-        
-        # Explicación visual después de la tabla
-        st.markdown("""
-        <div style='background-color: #d1ecf1; padding: 20px; border-radius: 10px; border-left: 5px solid #0c5460; margin-top: 20px;'>
-        <h4 style='color: #0c5460; margin-top: 0;'>🔬 Análisis de los Resultados</h4>
-        <p style='color: #0c5460; margin-bottom: 10px;'>
-        <strong>Observaciones importantes:</strong>
-        </p>
-        <ol style='color: #0c5460; margin-bottom: 10px;'>
-        <li><strong>La temperatura baja:</strong> Empieza en {:.1f}°C y va disminuyendo hacia {:.1f}°C</li>
-        <li><strong>La diferencia se reduce:</strong> La columna "Diferencia |T - Ta|" muestra cómo la brecha entre 
-        el objeto y el ambiente se hace cada vez más pequeña</li>
-        <li><strong>La expresión se mantiene constante:</strong> Mira la columna "ln|T - Ta| + kt". 
-        Todos los valores deberían ser aproximadamente <strong>{:.6f}</strong></li>
-        <li><strong>La diferencia con C es muy pequeña:</strong> Los valores en la última columna son extremadamente pequeños 
-        (como 0.000000), lo que significa que nuestro cálculo es muy preciso</li>
-        </ol>
-        <p style='color: #0c5460; margin: 0; font-weight: bold;'>
-        ✅ <strong>Conclusión:</strong> Si la "Diferencia con C" es muy pequeña en todas las filas, 
-        significa que nuestro modelo matemático funciona perfectamente y describe correctamente el proceso de enfriamiento.
-        </p>
-        </div>
-        """.format(T0, Ta, calculator.C), unsafe_allow_html=True)
         
         # Estadísticas de verificación
         max_diff = max([abs(val - calculator.C) for val in implicit_values_verify])

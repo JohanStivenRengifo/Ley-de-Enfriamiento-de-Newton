@@ -381,7 +381,7 @@ calculator = NewtonCoolingCalculator(T0=300, Ta=20, k=0.088367)
 **Implementación:**
 ```python
 def _calculate_constant(self):
-    return np.ln(abs(self.T0 - self.Ta))
+    return np.log(abs(self.T0 - self.Ta))
 ```
 
 **Ejemplo:**
@@ -440,7 +440,7 @@ graph LR
 ```python
 def temperature_implicit(self, t):
     T = self.temperature_explicit(t)
-    return np.ln(abs(T - self.Ta)) + self.k * t
+    return np.log(abs(T - self.Ta)) + self.k * t
 ```
 
 **Uso:** Este método se utiliza para verificar que la solución es correcta. Si todos los valores calculados son aproximadamente iguales a C, la solución es válida.
@@ -603,7 +603,7 @@ def calculate_k_from_data(T0, Ta, T_measured, t_measured):
     if abs(T_measured - Ta) < 1e-10:
         raise ValueError("La temperatura medida es muy cercana a la temperatura ambiente")
     
-    k = (1 / t_measured) * np.ln(abs((T0 - Ta) / (T_measured - Ta)))
+    k = (1 / t_measured) * np.log(abs((T0 - Ta) / (T_measured - Ta)))
     return k
 ```
 
@@ -867,7 +867,7 @@ sequenceDiagram
     U->>UI: Ingresa parámetros (T0, Ta, k)
     UI->>Calc: NewtonCoolingCalculator(T0, Ta, k)
     Calc->>Calc: _calculate_constant()
-    Calc->>NumPy: np.ln(abs(T0 - Ta))
+    Calc->>NumPy: np.log(abs(T0 - Ta))
     NumPy-->>Calc: Constante C
     Calc-->>UI: Instancia inicializada
     
@@ -890,7 +890,7 @@ sequenceDiagram
     U->>UI: Selecciona pestaña "Verificación"
     UI->>Calc: verify_implicit_solution(times)
     Calc->>Calc: temperature_implicit(t) para cada t
-    Calc->>NumPy: np.ln(abs(T - Ta)) + k*t
+    Calc->>NumPy: np.log(abs(T - Ta)) + k*t
     NumPy-->>Calc: Valores de solución implícita
     Calc-->>UI: implicit_values
     UI->>UI: Comparar con constante C
