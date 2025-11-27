@@ -38,9 +38,9 @@ $$T(t) = T_a + (T_0 - T_a) e^{-kt}$$
 
 ### Solución Implícita
 
-$$\log|T - T_a| + kt = C$$
+$$\ln|T - T_a| + kt = C$$
 
-Donde $C = \log|T_0 - T_a|$ es una constante determinada por las condiciones iniciales.
+Donde $C = \ln|T_0 - T_a|$ es una constante determinada por las condiciones iniciales.
 
 ## 🔧 Parámetros del Sistema
 
@@ -63,7 +63,7 @@ $$k = \frac{1}{t} \ln\left(\frac{T_0 - T_a}{T - T_a}\right) = \frac{1}{5} \ln\le
 
 El sistema verifica que la solución implícita satisface la ecuación diferencial mediante:
 
-1. Cálculo de la expresión $\log|T - T_a| + kt$ para múltiples valores de tiempo
+1. Cálculo de la expresión $\ln|T - T_a| + kt$ para múltiples valores de tiempo
 2. Verificación de que esta expresión permanece constante (igual a C)
 3. Derivación implícita para confirmar que se recupera la ecuación diferencial original
 

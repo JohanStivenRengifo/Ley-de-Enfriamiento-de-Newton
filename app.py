@@ -232,7 +232,7 @@ try:
         <strong>Observa cómo la temperatura disminuye gradualmente</strong> desde {:.1f}°C hacia {:.1f}°C (temperatura ambiente).
         </p>
         <p style='color: #34495e; margin-bottom: 10px;'>
-        <strong>Columna importante:</strong> La última columna muestra la expresión <strong>log|T - Ta| + kt</strong>. 
+        <strong>Columna importante:</strong> La última columna muestra la expresión <strong>ln|T - Ta| + kt</strong>. 
         Esta es una forma matemática de verificar que nuestro modelo es correcto. 
         <span style='background-color: #fff3cd; padding: 2px 5px; border-radius: 3px;'>
         <strong>¡Mira cómo todos los valores son prácticamente iguales!</strong>
@@ -248,7 +248,7 @@ try:
         st.info("""
         **🔍 Explicación simple de la última columna:**
         
-        La expresión **log|T - Ta| + kt** es como una "firma matemática" que debe mantenerse constante. 
+        La expresión **ln|T - Ta| + kt** es como una "firma matemática" que debe mantenerse constante. 
         Imagínalo como una balanza: aunque la temperatura cambia con el tiempo, esta expresión siempre suma el mismo valor.
         
         - Cuando el objeto está muy caliente (t=0), la diferencia |T - Ta| es grande
@@ -263,7 +263,7 @@ try:
             'Tiempo (min)': [f"{t:.2f}" for t in times_table],
             'Temperatura (°C)': [f"{T:.2f}" for T in temperatures_table],
             'Razón de Enfriamiento (°C/min)': [f"{rate:.2f}" for rate in cooling_rates_table],
-            'Solución Implícita: log|T-Ta| + kt (debe ser constante = C)': [f"{val:.6f}" for val in implicit_values]
+            'Solución Implícita: ln|T-Ta| + kt (debe ser constante = C)': [f"{val:.6f}" for val in implicit_values]
         })
         
         st.dataframe(df, use_container_width=True, hide_index=True)
@@ -356,7 +356,7 @@ try:
                      f"{t_90:.2f} min" if t_90 else "N/A")
         with col3:
             # Tiempo de vida media térmica (similar a decaimiento exponencial)
-            t_half_life = np.log(2) / k
+            t_half_life = np.ln(2) / k
             st.metric("Vida Media Térmica (ln(2)/k)", f"{t_half_life:.2f} min")
     
     with tab4:
@@ -369,14 +369,14 @@ try:
         obtenemos una relación matemática que puede expresarse en forma **implícita**:
         
         $$
-        \\log|T - T_a| + kt = C
+        \\ln|T - T_a| + kt = C
         $$
         
         ### ¿Qué significa esta expresión?
         
         Esta expresión combina dos términos:
         
-        1. **$\\log|T - T_a|$**: El logaritmo natural del valor absoluto de la diferencia entre la temperatura del objeto 
+        1. **$\\ln|T - T_a|$**: El lnaritmo natural del valor absoluto de la diferencia entre la temperatura del objeto 
            y la temperatura ambiente. Este término disminuye a medida que el objeto se acerca a la temperatura ambiente.
         
         2. **$kt$**: El producto de la constante de enfriamiento por el tiempo transcurrido. Este término aumenta linealmente con el tiempo.
@@ -384,7 +384,7 @@ try:
         ### ¿Por qué es importante verificar esto?
         
         La suma de estos dos términos debe resultar en una **constante C** para todos los valores de tiempo. 
-        Esta constante se determina a partir de las condiciones iniciales: $C = \\log|T_0 - T_a|$.
+        Esta constante se determina a partir de las condiciones iniciales: $C = \\ln|T_0 - T_a|$.
         
         Si esta expresión se mantiene constante, confirma matemáticamente que nuestra solución satisface correctamente 
         la ecuación diferencial original. Esta es una forma rigurosa de verificar la validez del modelo.
@@ -392,7 +392,7 @@ try:
         ### Interpretación Física
         
         La solución implícita nos dice que a medida que pasa el tiempo, la diferencia de temperatura disminuye exponencialmente, 
-        pero la combinación logarítmica de esta diferencia más el tiempo escalado por la constante k siempre suma el mismo valor constante.
+        pero la combinación lnarítmica de esta diferencia más el tiempo escalado por la constante k siempre suma el mismo valor constante.
         """)
         
         # Generar datos para verificación
@@ -407,10 +407,10 @@ try:
                 x=times_verify,
                 y=implicit_values_verify,
                 mode='lines+markers',
-                name='Solución Implícita: log|T - Ta| + kt',
+                name='Solución Implícita: ln|T - Ta| + kt',
                 line=dict(color='#95E1D3', width=2),
                 marker=dict(size=8),
-                hovertemplate='Tiempo: %{x:.2f} min<br>Valor de log|T-Ta| + kt: %{y:.6f}<br>Constante esperada C: ' + f'{calculator.C:.6f}<extra></extra>'
+                hovertemplate='Tiempo: %{x:.2f} min<br>Valor de ln|T-Ta| + kt: %{y:.6f}<br>Constante esperada C: ' + f'{calculator.C:.6f}<extra></extra>'
             )
         )
         
@@ -426,7 +426,7 @@ try:
         fig_verify.update_layout(
             title="Verificación de la Solución Implícita: La expresión debe mantenerse constante",
             xaxis_title="Tiempo (min)",
-            yaxis_title="Valor de log|T - Ta| + kt (debe ser constante = C)",
+            yaxis_title="Valor de ln|T - Ta| + kt (debe ser constante = C)",
             height=500,
             showlegend=True
         )
@@ -457,7 +457,7 @@ try:
         <td style='padding: 8px; border: 1px solid #fdcb6e;'>Cuánto más caliente está el objeto comparado con el ambiente</td>
         </tr>
         <tr>
-        <td style='padding: 8px; border: 1px solid #fdcb6e;'><strong>log|T - Ta| + kt</strong></td>
+        <td style='padding: 8px; border: 1px solid #fdcb6e;'><strong>ln|T - Ta| + kt</strong></td>
         <td style='padding: 8px; border: 1px solid #fdcb6e;'><span style='background-color: #fff; padding: 3px 6px; border-radius: 3px;'>
         <strong>¡Esta debe ser siempre la misma!</strong></span> Si cambia mucho, hay un error</td>
         </tr>
@@ -471,7 +471,7 @@ try:
         </tr>
         </table>
         <p style='color: #856404; margin-top: 15px; margin-bottom: 0;'>
-        <strong>💡 Consejo:</strong> Observa la columna "log|T - Ta| + kt". Si todos los números son muy parecidos 
+        <strong>💡 Consejo:</strong> Observa la columna "ln|T - Ta| + kt". Si todos los números son muy parecidos 
         (diferencia menor a 0.000001), ¡nuestro modelo es correcto! ✅
         </p>
         </div>
@@ -481,7 +481,7 @@ try:
             'Tiempo (min)': [f"{t:.2f}" for t in times_verify],
             'Temperatura T (°C)': [f"{calculator.temperature_explicit(t):.2f}" for t in times_verify],
             'Diferencia |T - Ta| (°C)': [f"{abs(calculator.temperature_explicit(t) - Ta):.2f}" for t in times_verify],
-            'log|T - Ta| + kt (debe ser constante)': [f"{val:.6f}" for val in implicit_values_verify],
+            'ln|T - Ta| + kt (debe ser constante)': [f"{val:.6f}" for val in implicit_values_verify],
             'Constante C esperada': [f"{calculator.C:.6f}" for _ in times_verify],
             'Diferencia con C': [f"{abs(val - calculator.C):.2e}" for val in implicit_values_verify]
         })
@@ -499,7 +499,7 @@ try:
         <li><strong>La temperatura baja:</strong> Empieza en {:.1f}°C y va disminuyendo hacia {:.1f}°C</li>
         <li><strong>La diferencia se reduce:</strong> La columna "Diferencia |T - Ta|" muestra cómo la brecha entre 
         el objeto y el ambiente se hace cada vez más pequeña</li>
-        <li><strong>La expresión se mantiene constante:</strong> Mira la columna "log|T - Ta| + kt". 
+        <li><strong>La expresión se mantiene constante:</strong> Mira la columna "ln|T - Ta| + kt". 
         Todos los valores deberían ser aproximadamente <strong>{:.6f}</strong></li>
         <li><strong>La diferencia con C es muy pequeña:</strong> Los valores en la última columna son extremadamente pequeños 
         (como 0.000000), lo que significa que nuestro cálculo es muy preciso</li>
@@ -562,22 +562,22 @@ try:
         se expresa mediante una ecuación que no está resuelta explícitamente para $T$:
         
         $$
-        \\log|T - T_a| + kt = C
+        \\ln|T - T_a| + kt = C
         $$
         
         **¿Qué significa esta expresión?**
         
-        - **$\\log|T - T_a|$**: Logaritmo natural del valor absoluto de la diferencia entre la temperatura del objeto 
+        - **$\\ln|T - T_a|$**: lnaritmo natural del valor absoluto de la diferencia entre la temperatura del objeto 
           y la temperatura ambiente. Este término representa cómo la diferencia de temperatura disminuye con el tiempo.
         
         - **$kt$**: Producto de la constante de enfriamiento por el tiempo. Este término aumenta linealmente con el tiempo.
         
         - **$C$**: Constante de integración que se determina a partir de las condiciones iniciales: 
-          $C = \\log|T_0 - T_a|$, donde $T_0$ es la temperatura inicial.
+          $C = \\ln|T_0 - T_a|$, donde $T_0$ es la temperatura inicial.
         
         **Importancia de la solución implícita:**
         
-        La suma $\\log|T - T_a| + kt$ debe mantenerse **constante** (igual a $C$) para todos los valores de tiempo. 
+        La suma $\\ln|T - T_a| + kt$ debe mantenerse **constante** (igual a $C$) para todos los valores de tiempo. 
         Esta propiedad permite verificar matemáticamente que la solución satisface la ecuación diferencial original. 
         Si derivamos implícitamente esta expresión respecto al tiempo, recuperamos la ecuación diferencial original, 
         confirmando así la validez del modelo.
@@ -617,7 +617,7 @@ try:
         st.subheader("Ecuación con Valores Actuales")
         st.latex(f"\\frac{{dT}}{{dt}} = -{k:.6f}(T - {Ta:.2f})")
         st.latex(f"T(t) = {Ta:.2f} + ({T0:.2f} - {Ta:.2f}) e^{{-{k:.6f}t}}")
-        st.latex(f"\\log|T - {Ta:.2f}| + {k:.6f}t = {calculator.C:.6f}")
+        st.latex(f"\\ln|T - {Ta:.2f}| + {k:.6f}t = {calculator.C:.6f}")
 
 except Exception as e:
     st.error(f"Error al inicializar el calculador: {e}")

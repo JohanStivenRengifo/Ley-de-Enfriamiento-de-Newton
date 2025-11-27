@@ -153,10 +153,10 @@ $$
 La solución también puede expresarse en forma implícita:
 
 $$
-\log|T - T_a| + kt = C
+\ln|T - T_a| + kt = C
 $$
 
-Donde $C = \log|T_0 - T_a|$ es una constante determinada por las condiciones iniciales.
+Donde $C = \ln|T_0 - T_a|$ es una constante determinada por las condiciones iniciales.
 
 **Verificación:** Derivando implícitamente respecto al tiempo:
 
@@ -201,7 +201,7 @@ $$
 \frac{T(t) - T_a}{T_0 - T_a} = e^{-kt}
 $$
 
-3. Aplicamos logaritmo natural en ambos lados:
+3. Aplicamos lnaritmo natural en ambos lados:
 $$
 \ln\left(\frac{T(t) - T_a}{T_0 - T_a}\right) = \ln(e^{-kt}) = -kt
 $$
@@ -211,7 +211,7 @@ $$
 k = -\frac{1}{t} \ln\left(\frac{T(t) - T_a}{T_0 - T_a}\right)
 $$
 
-5. Aplicando propiedades de logaritmos para simplificar:
+5. Aplicando propiedades de lnaritmos para simplificar:
 $$
 k = \frac{1}{t} \ln\left(\frac{T_0 - T_a}{T(t) - T_a}\right)
 $$
@@ -246,7 +246,7 @@ $$
 k = \frac{1}{5} \ln\left(\frac{300 - 20}{200 - 20}\right) = \frac{1}{5} \ln\left(\frac{280}{180}\right) = \frac{1}{5} \ln(1.5556)
 $$
 
-Calculando el logaritmo:
+Calculando el lnaritmo:
 
 $$
 k = \frac{1}{5} \times 0.4418 \approx 0.088367 \text{ min}^{-1}
@@ -367,26 +367,26 @@ C: float     # Constante de la solución implícita
 **Ejemplo:**
 ```python
 calculator = NewtonCoolingCalculator(T0=300, Ta=20, k=0.088367)
-# C se calcula automáticamente: C = log|300 - 20| = log(280) ≈ 5.634790
+# C se calcula automáticamente: C = ln|300 - 20| = ln(280) ≈ 5.634790
 ```
 
 ###### 2. `_calculate_constant(self)`
 
 **Propósito:** Calcula la constante C de la solución implícita.
 
-**Fórmula:** $C = \log|T_0 - T_a|$
+**Fórmula:** $C = \ln|T_0 - T_a|$
 
 **Retorna:** Valor de la constante C
 
 **Implementación:**
 ```python
 def _calculate_constant(self):
-    return np.log(abs(self.T0 - self.Ta))
+    return np.ln(abs(self.T0 - self.Ta))
 ```
 
 **Ejemplo:**
 - Si $T_0 = 300°C$ y $T_a = 20°C$
-- $C = \log|300 - 20| = \log(280) \approx 5.634790$
+- $C = \ln|300 - 20| = \ln(280) \approx 5.634790$
 
 ###### 3. `temperature_explicit(self, t)`
 
@@ -427,9 +427,9 @@ graph LR
 
 ###### 4. `temperature_implicit(self, t)`
 
-**Propósito:** Verifica la solución implícita calculando el valor de la expresión $\log|T - T_a| + kt$.
+**Propósito:** Verifica la solución implícita calculando el valor de la expresión $\ln|T - T_a| + kt$.
 
-**Fórmula:** $\log|T - T_a| + kt$ (debe ser igual a C)
+**Fórmula:** $\ln|T - T_a| + kt$ (debe ser igual a C)
 
 **Parámetros:**
 - `t`: Tiempo en minutos
@@ -440,7 +440,7 @@ graph LR
 ```python
 def temperature_implicit(self, t):
     T = self.temperature_explicit(t)
-    return np.log(abs(T - self.Ta)) + self.k * t
+    return np.ln(abs(T - self.Ta)) + self.k * t
 ```
 
 **Uso:** Este método se utiliza para verificar que la solución es correcta. Si todos los valores calculados son aproximadamente iguales a C, la solución es válida.
@@ -518,7 +518,7 @@ def time_to_reach_temperature(self, target_temp, tolerance=0.01):
     if (target_temp > self.T0 > self.Ta) or (target_temp < self.T0 < self.Ta):
         return None  # La temperatura objetivo está en dirección opuesta
     
-    t = (1 / self.k) * np.log(abs((self.T0 - self.Ta) / (target_temp - self.Ta)))
+    t = (1 / self.k) * np.ln(abs((self.T0 - self.Ta) / (target_temp - self.Ta)))
     return max(0, t)
 ```
 
@@ -603,7 +603,7 @@ def calculate_k_from_data(T0, Ta, T_measured, t_measured):
     if abs(T_measured - Ta) < 1e-10:
         raise ValueError("La temperatura medida es muy cercana a la temperatura ambiente")
     
-    k = (1 / t_measured) * np.log(abs((T0 - Ta) / (T_measured - Ta)))
+    k = (1 / t_measured) * np.ln(abs((T0 - Ta) / (T_measured - Ta)))
     return k
 ```
 
@@ -750,7 +750,7 @@ fig = make_subplots(
   - Tiempo (min)
   - Temperatura (°C)
   - Razón de Enfriamiento (°C/min)
-  - Solución Implícita: log|T-Ta| + kt
+  - Solución Implícita: ln|T-Ta| + kt
 - Botón de descarga CSV
 
 **Proceso de Generación de Tabla:**
@@ -817,7 +817,7 @@ graph TD
   - Tiempo
   - Temperatura T
   - Diferencia |T - Ta|
-  - log|T - Ta| + kt (debe ser constante)
+  - ln|T - Ta| + kt (debe ser constante)
   - Constante C esperada
   - Diferencia con C
 - Estadísticas de verificación
@@ -867,7 +867,7 @@ sequenceDiagram
     U->>UI: Ingresa parámetros (T0, Ta, k)
     UI->>Calc: NewtonCoolingCalculator(T0, Ta, k)
     Calc->>Calc: _calculate_constant()
-    Calc->>NumPy: np.log(abs(T0 - Ta))
+    Calc->>NumPy: np.ln(abs(T0 - Ta))
     NumPy-->>Calc: Constante C
     Calc-->>UI: Instancia inicializada
     
@@ -890,7 +890,7 @@ sequenceDiagram
     U->>UI: Selecciona pestaña "Verificación"
     UI->>Calc: verify_implicit_solution(times)
     Calc->>Calc: temperature_implicit(t) para cada t
-    Calc->>NumPy: np.log(abs(T - Ta)) + k*t
+    Calc->>NumPy: np.ln(abs(T - Ta)) + k*t
     NumPy-->>Calc: Valores de solución implícita
     Calc-->>UI: implicit_values
     UI->>UI: Comparar con constante C
@@ -1002,7 +1002,7 @@ graph TB
 
 ### Librerías Utilizadas
 
-- **NumPy**: Cálculos numéricos (logaritmos, exponenciales, arrays)
+- **NumPy**: Cálculos numéricos (lnaritmos, exponenciales, arrays)
 - **SciPy**: Optimización y funciones científicas
 - **Streamlit**: Framework para aplicaciones web interactivas
 - **Plotly**: Visualización de gráficas interactivas

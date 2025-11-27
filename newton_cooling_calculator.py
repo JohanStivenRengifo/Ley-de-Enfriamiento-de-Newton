@@ -35,9 +35,9 @@ class NewtonCoolingCalculator:
     def _calculate_constant(self):
         """
         Calcula la constante C de la solución implícita
-        C = log|T0 - Ta|
+        C = ln|T0 - Ta|
         """
-        return np.log(abs(self.T0 - self.Ta))
+        return np.ln(abs(self.T0 - self.Ta))
     
     def temperature_explicit(self, t):
         """
@@ -54,16 +54,16 @@ class NewtonCoolingCalculator:
     
     def temperature_implicit(self, t):
         """
-        Verifica la solución implícita: log|T - Ta| + k*t = C
+        Verifica la solución implícita: ln|T - Ta| + k*t = C
         
         Args:
             t: Tiempo en minutos
             
         Returns:
-            Valor de la expresión log|T - Ta| + k*t (debe ser igual a C)
+            Valor de la expresión ln|T - Ta| + k*t (debe ser igual a C)
         """
         T = self.temperature_explicit(t)
-        return np.log(abs(T - self.Ta)) + self.k * t
+        return np.ln(abs(T - self.Ta)) + self.k * t
     
     def cooling_rate(self, t):
         """
@@ -98,7 +98,7 @@ class NewtonCoolingCalculator:
         
         # De la solución explícita: t = (1/k) * ln((T0 - Ta)/(T - Ta))
         try:
-            t = (1 / self.k) * np.log(abs((self.T0 - self.Ta) / (target_temp - self.Ta)))
+            t = (1 / self.k) * np.ln(abs((self.T0 - self.Ta) / (target_temp - self.Ta)))
             return max(0, t)  # Asegurar tiempo no negativo
         except:
             return None
@@ -149,5 +149,5 @@ class NewtonCoolingCalculator:
         if abs(T_measured - Ta) < 1e-10:
             raise ValueError("La temperatura medida es muy cercana a la temperatura ambiente")
         
-        k = (1 / t_measured) * np.log(abs((T0 - Ta) / (T_measured - Ta)))
+        k = (1 / t_measured) * np.ln(abs((T0 - Ta) / (T_measured - Ta)))
         return k
